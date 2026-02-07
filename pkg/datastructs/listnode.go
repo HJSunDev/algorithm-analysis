@@ -57,19 +57,30 @@ func BuildCycleList(vals []int, cyclePos int) *ListNode {
 	return dummy.Next
 }
 
+// maxTraverse 是 Slice/String 遍历的节点上限，防止环形链表导致死循环
+const maxTraverse = 1000
+
 // Slice 将链表转换为整数切片，便于测试中进行断言比较。
-// nil 链表返回 nil 切片。
+// nil 链表返回 nil 切片。超过 1000 个节点时截断，防止环形链表死循环。
 func (l *ListNode) Slice() []int {
 	var res []int
 	for p := l; p != nil; p = p.Next {
 		res = append(res, p.Val)
+		if len(res) >= maxTraverse {
+			break
+		}
 	}
 	return res
 }
 
 // String 格式化输出链表，例: [1 2 3]
+// 环形链表会截断并标注提示
 func (l *ListNode) String() string {
-	return fmt.Sprintf("%v", l.Slice())
+	s := l.Slice()
+	if len(s) >= maxTraverse {
+		return fmt.Sprintf("%v...(截断: 可能存在环)", s)
+	}
+	return fmt.Sprintf("%v", s)
 }
 
 // Equal 判断两个链表是否值相等

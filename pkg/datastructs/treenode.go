@@ -1,5 +1,7 @@
 package datastructs
 
+import "fmt"
+
 // TreeNode 二叉树节点，用于树类题目
 type TreeNode struct {
 	Val   int
@@ -24,7 +26,7 @@ const NULL = -1 << 31
 //	      /  \
 //	     15   7
 func BuildTree(vals ...int) *TreeNode {
-	if len(vals) == 0 {
+	if len(vals) == 0 || vals[0] == NULL {
 		return nil
 	}
 
@@ -119,6 +121,44 @@ func (t *TreeNode) LevelOrder() [][]int {
 		res = append(res, level)
 	}
 	return res
+}
+
+// Equal 判断两棵二叉树是否结构和值都相等
+func (t *TreeNode) Equal(other *TreeNode) bool {
+	if t == nil && other == nil {
+		return true
+	}
+	if t == nil || other == nil {
+		return false
+	}
+	return t.Val == other.Val &&
+		t.Left.Equal(other.Left) &&
+		t.Right.Equal(other.Right)
+}
+
+// String 返回二叉树的层序序列化表示，便于调试
+// 例: [3, 9, 20, null, null, 15, 7]
+func (t *TreeNode) String() string {
+	if t == nil {
+		return "[]"
+	}
+	var res []string
+	queue := []*TreeNode{t}
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
+		if node == nil {
+			res = append(res, "null")
+			continue
+		}
+		res = append(res, fmt.Sprintf("%d", node.Val))
+		queue = append(queue, node.Left, node.Right)
+	}
+	// 去除末尾的 null
+	for len(res) > 0 && res[len(res)-1] == "null" {
+		res = res[:len(res)-1]
+	}
+	return fmt.Sprintf("%v", res)
 }
 
 // MaxDepth 返回二叉树的最大深度

@@ -44,8 +44,8 @@ algorithm-analysis/
 
 导入: `algorithm-analysis/pkg/datastructs`
 
-- `ListNode` — `BuildList(...int)`, `BuildCycleList([]int, int)`
-- `TreeNode` — `BuildTree(...int)`，`NULL` 常量表示空节点
+- `ListNode` — `BuildList(...int)`, `BuildCycleList([]int, int)`, `Slice()`, `Equal()`, `String()`
+- `TreeNode` — `BuildTree(...int)`，`NULL` 常量表示空节点，`Equal()`, `String()`
 - TreeNode 遍历: `Inorder()`, `Preorder()`, `Postorder()`, `LevelOrder()`, `MaxDepth()`
 
 ## 工作流程

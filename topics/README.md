@@ -17,6 +17,7 @@
 | 动态规划 | 0 | [dynamic-programming.md](dynamic-programming.md) |
 | 贪心 | 0 | [greedy.md](greedy.md) |
 | 图论 | 0 | [graph.md](graph.md) |
+| 堆与优先队列 | 0 | [heap.md](heap.md) |
 | 排序与搜索 | 0 | [sort-search.md](sort-search.md) |
 | 数学与位运算 | 0 | [math-bit.md](math-bit.md) |
 
