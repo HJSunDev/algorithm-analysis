@@ -1,0 +1,62 @@
+---
+description: 算法学习项目的核心规则，定义项目结构、命名规范和索引体系
+alwaysApply: true
+---
+
+# Go 算法学习项目 — 核心规则
+
+## 项目结构
+
+```
+algorithm-analysis/
+├── pkg/datastructs/         # 公共数据结构 (ListNode, TreeNode)
+├── solutions/               # 题解根目录
+│   ├── README.md            #   分桶索引入口
+│   └── XXXX-XXXX/           #   分桶 (每 100 题)
+│       ├── README.md        #     本桶题目索引
+│       └── XXXX-slug/       #     具体题目
+├── topics/                  # 知识点分类导航
+│   ├── README.md            #   分类总览
+│   └── {topic}.md           #   各知识点题目索引
+```
+
+## 命名规范
+
+- **分桶目录**: `floor(题号/100)*100` 补零 4 位为起始，`+99` 为结束，如 `0000-0099`, `0100-0199`
+- **题目目录**: `{题号4位}-{英文slug}`，全小写连字符分隔，如 `0001-two-sum`
+- **Go 包名**: `p{题号4位}`，如 `package p0001`
+- **文件名**: 固定为 `solution.go`, `solution_test.go`, `README.md`
+
+## 分布式索引体系
+
+索引分散在多个文件中，避免单文件过大：
+
+| 文件 | 作用 | 规模上限 |
+|------|------|---------|
+| `solutions/README.md` | 列出所有分桶 | ~20 行（2000 题） |
+| `solutions/XXXX-XXXX/README.md` | 本桶内题目列表 | ≤100 行 |
+| `topics/README.md` | 列出所有知识点分类 | ~15 行 |
+| `topics/{topic}.md` | 该知识点下的题目列表 | 按分类自然分散 |
+
+创建题目时必须同步维护相关索引文件。
+
+## 公共数据结构
+
+导入: `algorithm-analysis/pkg/datastructs`
+
+- `ListNode` — `BuildList(...int)`, `BuildCycleList([]int, int)`
+- `TreeNode` — `BuildTree(...int)`，`NULL` 常量表示空节点
+- TreeNode 遍历: `Inorder()`, `Preorder()`, `Postorder()`, `LevelOrder()`, `MaxDepth()`
+
+## 工作流程
+
+1. **创建题目** — 用户提供题目信息 → AI 按 `create-problem` 规则创建文件并维护索引
+2. **手动练习** — 用户在 `solution.go` 编写解法
+3. **验证审查** — AI 按 `review-solution` 规则运行测试和代码审查
+4. **总结归档** — AI 将学习要点补充到题目 `README.md`
+
+## 语言规范
+
+- 所有交互使用中文，代码注释使用中文
+- 变量名和函数名使用英文（Go 规范）
+- 单行注释放在代码上方
